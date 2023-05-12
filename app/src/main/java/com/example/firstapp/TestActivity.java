@@ -25,9 +25,6 @@ public class TestActivity extends AppCompatActivity {
             "Мужской","Женский"
     };
         private TextInputEditText edGender, edHeight,edWeight,edAge,edPress,edRunch,edRun, edJump,edSlant, edPullUp;
-        private DatabaseReference testDbRef;
-        private String TEST_REF = "Test";
-        private String DB_HOST = "https://project-e1e65-default-rtdb.europe-west1.firebasedatabase.app";
         private static final String TAG = "TestActivity";
         private FirebaseAuth mAuth;
 
@@ -36,11 +33,11 @@ public class TestActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.test_activity);
             mAuth = FirebaseAuth.getInstance();
-            testDbRef = FirebaseDatabase.getInstance(DB_HOST).getReference(TEST_REF);
             edit();
         }
-        public void goToPsyhoTest(){
+        public void goToPsyhoTest(Test test){
             Intent intent = new Intent(TestActivity.this, PsyhoTestActivity.class);
+            intent.putExtra("Test", test);
             startActivity(intent);
         }
         public void edit()
@@ -60,7 +57,6 @@ public class TestActivity extends AppCompatActivity {
         public void onClickSave(View view)
         {
             Test newTest = new Test();
-            newTest.id = testDbRef.getKey();
             newTest.gender = edGender.getText().toString();
             newTest.height = edHeight.getText().toString();
             newTest.weight = edWeight.getText().toString();
@@ -72,31 +68,10 @@ public class TestActivity extends AppCompatActivity {
             newTest.jump = edJump.getText().toString();
             newTest.pullup = edPullUp.getText().toString();
             newTest.slant = edSlant.getText().toString();
-            Log.w("Tests", "this weight" + newTest.weight);
-            newTest.calc();
-            if (newTest.isCorrect())
-            {
-                testDbRef.child(newTest.id).setValue(newTest)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.w("Tests", "setValue success");
-                                goToPsyhoTest();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w("Tests", "setValue failure");
-                                Toast.makeText(TestActivity.this, "Не удалось сохранить текущий шаг /n Попробуйте позже", Toast.LENGTH_SHORT).show();
-                            }
-                        });;
-            }
-            else
-            {
-                Toast.makeText(this, "Заполните все поля", Toast.LENGTH_SHORT).show();
-                return;
-            }
+            goToPsyhoTest(newTest);
+//
+//            newTest.calc();
+
 
         }
         public void onClickRead(View view)

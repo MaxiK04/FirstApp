@@ -2,16 +2,14 @@ package com.example.firstapp;
 
 import android.text.TextUtils;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Test {
-    public String id, weight, age, height, owner, runch, run, press, gender, jump, pullup, slant, result;
-
-    private SportDiscipline sportDiscipline;
+public class Test implements Serializable {
+    public String id, walkcount, weight, age, height, owner, runch, run, press, gender, jump, pullup, slant, result;
 
     public Test() {
-        this.sportDiscipline = new SportDiscipline();
     }
     public Test(String id, String weight, String age, String height, String owner,String runch, String run, String press, String gender, String jump, String pullup, String slant) {
         this.id = id;
@@ -26,7 +24,6 @@ public class Test {
         this.jump = jump;
         this.pullup = pullup;
         this.slant = slant;
-        this.sportDiscipline = new SportDiscipline();
     }
 
     public boolean isCorrect() {
@@ -38,13 +35,14 @@ public class Test {
                 && !TextUtils.isEmpty(this.press);
     }
     public void calc() {
-        this.setWeightIndex();
-        this.result = this.sportDiscipline.getResult();
+        SportDiscipline sportDiscipline = new SportDiscipline();
+        this.setWeightIndex(sportDiscipline);
+        this.result = sportDiscipline.getResult();
     }
-    private void setWeightIndex(){
+    private void setWeightIndex(SportDiscipline sportDiscipline){
         Integer weight = Integer.parseInt(this.weight);
         if (weight > 90) {
-            this.sportDiscipline.football -= 1;
+            sportDiscipline.football -= 1;
         }
     }
 }
