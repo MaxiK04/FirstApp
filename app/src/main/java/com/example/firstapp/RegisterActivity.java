@@ -1,7 +1,5 @@
 package com.example.firstapp;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +20,7 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
     private FirebaseAuth mAuth;
 
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_activity);
@@ -33,8 +32,13 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    private void goToTestActivity(){
+        Intent intent = new Intent(this, TestActivity.class);
+        startActivity(intent);
+    }
+
     private void createAccount(String email, String password) {
-        // [START create_user_with_email]
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
@@ -43,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success");
                         FirebaseUser user = mAuth.getCurrentUser();
-                        updateUI(user);
+                        goToTestActivity();
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -61,9 +65,23 @@ public class RegisterActivity extends AppCompatActivity {
         String password = String.valueOf(passwordInput.getText());
         Log.d(TAG,"onButtonAccept:\n " + email + "\n" + password);
         createAccount(email, password);
-
+    }
+    private void onButtonAccept() {
+        // Send verification email
+        // [START send_email_verification]
+        final FirebaseUser user = mAuth.getCurrentUser();
+        user.sendEmailVerification()
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // Email sent
+                    }
+                });
+        // [END send_email_verification]
     }
 
+    private void reload() { }
     private void updateUI(FirebaseUser user) {
     }
+
 }
