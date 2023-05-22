@@ -24,7 +24,7 @@ public class TestActivity extends AppCompatActivity {
     private static final String[] Gender = new String[]{
             "Мужской","Женский"
     };
-        private TextInputEditText edGender, edHeight,edWeight,edAge,edPress,edRunch,edRun, edJump,edSlant, edPullUp;
+        private TextInputEditText edGender, edHeight,edWeight,edAge,edPress,edRunch,edRun, edJump,edSlant, edPullUp, edJumpUp, edRunlong;
         private static final String TAG = "TestActivity";
         private FirebaseAuth mAuth;
 
@@ -52,6 +52,8 @@ public class TestActivity extends AppCompatActivity {
             edJump = findViewById(R.id.edJump);
             edSlant = findViewById(R.id.edSlant);
             edPullUp = findViewById(R.id.edPullUp);
+            edJumpUp = findViewById(R.id.edJumpUp);
+            edRunlong = findViewById(R.id.edRunLong);
 
         }
         public void onClickSave(View view)
@@ -68,6 +70,8 @@ public class TestActivity extends AppCompatActivity {
             newTest.jump = edJump.getText().toString();
             newTest.pullup = edPullUp.getText().toString();
             newTest.slant = edSlant.getText().toString();
+            newTest.jumpup = edJumpUp.getText().toString();
+            newTest.runlong = edRunlong.getText().toString();
             goToPsyhoTest(newTest);
 //
 //            newTest.calc();

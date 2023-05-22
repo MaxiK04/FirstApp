@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Test implements Serializable {
-    public String id, walkcount, weight, age, height, owner, runch, run, press, gender, jump, pullup, slant, result;
+    public String id, walkcount, weight, age, height, owner, runch, run, press, gender, jump, pullup, slant, jumpup, runlong, result;
 
     public Test() {
     }
-    public Test(String id, String weight, String age, String height, String owner,String runch, String run, String press, String gender, String jump, String pullup, String slant) {
+    public Test(String id, String weight, String age, String height, String owner,String runch, String run, String press, String gender, String jump, String pullup, String slant,String jumpup, String runlong) {
         this.id = id;
         this.weight = weight;
         this.age = age;
@@ -24,6 +24,8 @@ public class Test implements Serializable {
         this.jump = jump;
         this.pullup = pullup;
         this.slant = slant;
+        this.jumpup = jumpup;
+        this.runlong = runlong;
     }
 
     public boolean isCorrect() {
